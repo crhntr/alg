@@ -38,7 +38,7 @@ func (person *Person) BreakUp() {
 //  n > 1 if person1 a is prefered
 //  n = 0 if there is no preference
 //  n < 1 if person2 a is prefered
-func (person Person) PerfersCurrentEngagement(otherPerson *Person) bool {
+func (person Person) PrefersToExistingEngagement(otherPerson *Person) bool {
 	otherPersonIndex := len(person.Preferences)
 	engagedToIndex := len(person.Preferences)
 
@@ -51,7 +51,7 @@ func (person Person) PerfersCurrentEngagement(otherPerson *Person) bool {
 		}
 	}
 
-	return engagedToIndex <= otherPersonIndex
+	return engagedToIndex > otherPersonIndex
 }
 
 func (person *Person) GetPrefered(people []Person) int {

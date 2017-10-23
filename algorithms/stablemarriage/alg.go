@@ -16,9 +16,8 @@ func StableMatching(males, females []Person) {
 				continue
 			}
 
-			if !females[fi].PerfersCurrentEngagement(&males[mi]) {
+			if females[fi].PrefersToExistingEngagement(&males[mi]) {
 				females[fi].BreakUp()
-
 				propose(&males[mi], &females[fi])
 				continue
 			}
