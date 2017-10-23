@@ -14,24 +14,52 @@ type Person struct {
 	EngagedTo *Person
 }
 
+func (person Person) String() string {
+	str := strings.Title(person.Name)
+	if person.EngagedTo == nil {
+		str += " (single)"
+		return str
+	}
+	str += " is engaged to "
+	str += strings.Title(person.EngagedTo.Name)
+	return str
+}
+
+func (person Person) IsSingle() bool {
+	return person.EngagedTo == nil
+}
+
+func (person *Person) BreakUp() {
+	person.EngagedTo.EngagedTo = nil
+	person.EngagedTo = nil
+}
+
 // Perfers returns
 //  n > 1 if person1 a is prefered
 //  n = 0 if there is no preference
 //  n < 1 if person2 a is prefered
-func (person Person) Perfers(person1, person2 *Person) int {
-	p1Index := len(person.Preferences)
-	p2Index := len(person.Preferences)
+func (person Person) PerfersCurrentEngagement(otherPerson *Person) bool {
+	otherPersonIndex := len(person.Preferences)
+	engagedToIndex := len(person.Preferences)
 
 	for i, prefName := range person.Preferences {
-		if prefName == person1.Name {
-			p1Index = i
+		if prefName == otherPerson.Name {
+			otherPersonIndex = i
 		}
-		if prefName == person2.Name {
-			p2Index = i
+		if prefName == person.EngagedTo.Name {
+			engagedToIndex = i
 		}
 	}
 
-	return p2Index - p1Index
+	return engagedToIndex <= otherPersonIndex
+}
+
+func (person *Person) GetPrefered(people []Person) int {
+	i := findIndex(people, person.Preferences[0])
+	if len(person.Preferences) > 1 {
+		person.Preferences = person.Preferences[1:]
+	}
+	return i
 }
 
 func SinglesExist(people []Person) bool {
@@ -91,15 +119,4 @@ func mustNotErr(err error) {
 	if err != nil {
 		panic(err)
 	}
-}
-
-func (person Person) String() string {
-	str := strings.Title(person.Name)
-	if person.EngagedTo == nil {
-		str += " (single)"
-		return str
-	}
-	str += " is engaged to "
-	str += strings.Title(person.EngagedTo.Name)
-	return str
 }

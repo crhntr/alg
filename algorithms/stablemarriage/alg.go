@@ -6,21 +6,18 @@ func StableMatching(males, females []Person) {
 
 	for SinglesExist(males) {
 		for mi := range males {
-			if males[mi].EngagedTo != nil {
+			if !males[mi].IsSingle() {
 				continue
 			}
 
-			fi := findIndex(females, males[mi].Preferences[0])
-			if len(males[mi].Preferences) > 1 {
-				males[mi].Preferences = males[mi].Preferences[1:]
-			}
-			if females[fi].EngagedTo == nil {
+			fi := males[mi].GetPrefered(females)
+			if females[fi].IsSingle() {
 				propose(&males[mi], &females[fi])
 				continue
 			}
 
-			if females[fi].Perfers(&males[mi], females[fi].EngagedTo) > 0 {
-				males[findIndex(males, females[fi].EngagedTo.Name)].EngagedTo = nil
+			if !females[fi].PerfersCurrentEngagement(&males[mi]) {
+				females[fi].BreakUp()
 
 				propose(&males[mi], &females[fi])
 				continue
