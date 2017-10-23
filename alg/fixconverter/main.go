@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-var filename = "input.txt"
+var filename = "testdata/input.txt"
 
 func init() {
 	if len(os.Args) > 1 {
