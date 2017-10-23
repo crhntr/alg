@@ -52,11 +52,11 @@ func SinglesExist(people []Person) bool {
 // 	return false
 // }
 
-func Propose(person1, person2 *Person) {
+func propose(person1, person2 *Person) {
 	person1.EngagedTo, person2.EngagedTo = person2, person1
 }
 
-func FindIndex(people []Person, name string) int {
+func findIndex(people []Person, name string) int {
 	for i := range people {
 		if people[i].Name == name {
 			return i

@@ -9,6 +9,9 @@ func TestStableMatching00(t *testing.T) {
 	males, females := SortPeopleByGender(people)
 	StableMatching(males, females)
 
+	if SinglesExist(males) || SinglesExist(females) {
+		t.Fail()
+	}
 	for _, person := range males {
 		t.Log(person)
 	}
@@ -19,6 +22,9 @@ func TestStableMatching01(t *testing.T) {
 	males, females := SortPeopleByGender(people)
 	StableMatching(males, females)
 
+	if SinglesExist(males) || SinglesExist(females) {
+		t.Fail()
+	}
 	for _, person := range males {
 		t.Log(person)
 	}
@@ -34,6 +40,9 @@ func TestStableMatching02(t *testing.T) {
 
 	StableMatching(males, females)
 
+	if SinglesExist(males) || SinglesExist(females) {
+		t.Fail()
+	}
 	for _, person := range males {
 		t.Log(person)
 	}
