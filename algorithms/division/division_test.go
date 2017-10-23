@@ -2,6 +2,10 @@ package division
 
 import "testing"
 
+func TestDivisionVerbose(t *testing.T) {
+	DivisionVerbose(13, 3)
+}
+
 func TestDivision3_6(t *testing.T) {
 	if q, r := Division(6, 3); q != 2 && r != 0 {
 		t.Fail()
