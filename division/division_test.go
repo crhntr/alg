@@ -18,15 +18,15 @@ func TestDivision7_2(t *testing.T) {
 	}
 }
 
-func BenchmarkRecursiveFib72(b *testing.B) {
+func BenchmarkDivision72(b *testing.B) {
 	benchmarkDiv(7, 2, b)
 }
 
-func BenchmarkRecursiveFib702(b *testing.B) {
+func BenchmarkDivision702(b *testing.B) {
 	benchmarkDiv(70, 2, b)
 }
 
-func BenchmarkRecursiveFib7002(b *testing.B) {
+func BenchmarkDivision7002(b *testing.B) {
 	benchmarkDiv(700, 2, b)
 }
 
