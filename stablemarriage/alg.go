@@ -4,7 +4,7 @@ func StableMatching(males, females []Person) {
 	// by having a nil EngagedTo, a person is free... inital state all
 	// people are free
 
-	for SinglesExist(males) {
+	for SinglesExist(males) { // ∃ free man m who still has a woman w to propose to
 		for mi := range males {
 			if !males[mi].IsSingle() {
 				continue
