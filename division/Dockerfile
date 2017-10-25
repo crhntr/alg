@@ -1,5 +1,5 @@
 FROM golang:1.9
-WORKDIR /go/src/github.com/crhntr/math354/division
+WORKDIR /go/src/github.com/crhntr/alg/division
 COPY . .
 RUN go build -o app
 CMD ["./app"]
