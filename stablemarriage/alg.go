@@ -4,21 +4,22 @@ func StableMatching(males, females []Person) {
 	// by having a nil EngagedTo, a person is free... inital state all
 	// people are free
 
-	for SinglesExist(males) { // ∃ free man m who still has a woman w to propose to
+	// while (∃ free man m who still has a woman w to propose to)
+	for SinglesExist(males) {
 		for mi := range males {
 			if !males[mi].IsSingle() {
 				continue
 			}
 
-			fi := males[mi].GetPrefered(females)
+			fi := males[mi].GetPreferedMatch(females)
 			if females[fi].IsSingle() {
-				propose(&males[mi], &females[fi])
+				match(&males[mi], &females[fi])
 				continue
 			}
 
-			if females[fi].PrefersToExistingEngagement(&males[mi]) {
+			if females[fi].CompareToExistingMatch(&males[mi]) {
 				females[fi].BreakUp()
-				propose(&males[mi], &females[fi])
+				match(&males[mi], &females[fi])
 				continue
 			}
 		}

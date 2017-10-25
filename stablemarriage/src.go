@@ -6,39 +6,47 @@ import (
 	"strings"
 )
 
+// type Matchable interface {
+// 	SetMatch(Matchable)
+// 	GetMatch(Matchable) Matchable
+//
+// 	GetPreferedMatch([]Matchable) int
+// 	IsMatched() bool
+// }
+
 type Person struct {
 	Name        string   `json:"name"`
 	Male        bool     `json:"male"`
 	Preferences []string `json:"preferences"`
 
-	EngagedTo *Person
+	Match *Person
 }
 
 func (person Person) String() string {
 	str := strings.Title(person.Name)
-	if person.EngagedTo == nil {
+	if person.Match == nil {
 		str += " (single)"
 		return str
 	}
 	str += " is engaged to "
-	str += strings.Title(person.EngagedTo.Name)
+	str += strings.Title(person.Match.Name)
 	return str
 }
 
 func (person Person) IsSingle() bool {
-	return person.EngagedTo == nil
+	return person.Match == nil
 }
 
 func (person *Person) BreakUp() {
-	person.EngagedTo.EngagedTo = nil
-	person.EngagedTo = nil
+	person.Match.Match = nil
+	person.Match = nil
 }
 
 // Perfers returns
 //  n > 1 if person1 a is prefered
 //  n = 0 if there is no preference
 //  n < 1 if person2 a is prefered
-func (person Person) PrefersToExistingEngagement(otherPerson *Person) bool {
+func (person Person) CompareToExistingMatch(otherPerson *Person) bool {
 	otherPersonIndex := len(person.Preferences)
 	engagedToIndex := len(person.Preferences)
 
@@ -46,7 +54,7 @@ func (person Person) PrefersToExistingEngagement(otherPerson *Person) bool {
 		if prefName == otherPerson.Name {
 			otherPersonIndex = i
 		}
-		if prefName == person.EngagedTo.Name {
+		if prefName == person.Match.Name {
 			engagedToIndex = i
 		}
 	}
@@ -54,7 +62,7 @@ func (person Person) PrefersToExistingEngagement(otherPerson *Person) bool {
 	return engagedToIndex > otherPersonIndex
 }
 
-func (person *Person) GetPrefered(people []Person) int {
+func (person *Person) GetPreferedMatch(people []Person) int {
 	i := findIndex(people, person.Preferences[0])
 	if len(person.Preferences) > 1 {
 		person.Preferences = person.Preferences[1:]
@@ -64,7 +72,7 @@ func (person *Person) GetPrefered(people []Person) int {
 
 func SinglesExist(people []Person) bool {
 	for i := range people {
-		if people[i].EngagedTo == nil {
+		if people[i].Match == nil {
 			return true
 		}
 	}
@@ -80,8 +88,8 @@ func SinglesExist(people []Person) bool {
 // 	return false
 // }
 
-func propose(person1, person2 *Person) {
-	person1.EngagedTo, person2.EngagedTo = person2, person1
+func match(person1, person2 *Person) {
+	person1.Match, person2.Match = person2, person1
 }
 
 func findIndex(people []Person, name string) int {
