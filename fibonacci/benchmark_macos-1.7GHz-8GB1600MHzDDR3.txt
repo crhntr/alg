@@ -1,0 +1,44 @@
+goos: darwin
+goarch: amd64
+pkg: github.com/crhntr/alg/fibonacci
+BenchmarkIterativeFib1-4    	200000000	         6.93 ns/op
+BenchmarkIterativeFib2-4    	200000000	         8.54 ns/op
+BenchmarkIterativeFib3-4    	200000000	         9.29 ns/op
+BenchmarkIterativeFib10-4   	100000000	        17.6 ns/op
+BenchmarkIterativeFib20-4   	50000000	        30.1 ns/op
+BenchmarkIterativeFib40-4   	30000000	        57.9 ns/op
+BenchmarkIterativeFib50-4   	10000000	       211 ns/op
+BenchmarkIterativeFib60-4   	10000000	       232 ns/op
+BenchmarkIterativeFib70-4   	10000000	       233 ns/op
+BenchmarkIterativeFib80-4   	10000000	       215 ns/op
+BenchmarkIterativeFib90-4   	 5000000	       250 ns/op
+BenchmarkRecursiveFib1-4    	500000000	         4.06 ns/op
+BenchmarkRecursiveFib2-4    	100000000	        10.3 ns/op
+BenchmarkRecursiveFib3-4    	100000000	        16.1 ns/op
+BenchmarkRecursiveFib10-4   	 3000000	       544 ns/op
+BenchmarkRecursiveFib20-4   	   20000	     69448 ns/op
+BenchmarkRecursiveFib40-4   	       1	1081043986 ns/op
+BenchmarkMatrixFib1-4       	50000000	        33.5 ns/op
+BenchmarkMatrixFib2-4       	30000000	        51.2 ns/op
+BenchmarkMatrixFib3-4       	20000000	        71.8 ns/op
+BenchmarkMatrixFib10-4      	10000000	       239 ns/op
+BenchmarkMatrixFib20-4      	 3000000	       448 ns/op
+BenchmarkMatrixFib40-4      	 1000000	      1003 ns/op
+BenchmarkMatrixFib50-4      	 1000000	      1174 ns/op
+BenchmarkMatrixFib60-4      	 1000000	      1340 ns/op
+BenchmarkMatrixFib70-4      	 1000000	      1442 ns/op
+BenchmarkMatrixFib80-4      	 1000000	      1676 ns/op
+BenchmarkMatrixFib90-4      	 1000000	      1905 ns/op
+BenchmarkMatrixLogFib1-4    	30000000	        59.1 ns/op
+BenchmarkMatrixLogFib2-4    	20000000	        83.9 ns/op
+BenchmarkMatrixLogFib3-4    	20000000	       105 ns/op
+BenchmarkMatrixLogFib10-4   	10000000	       155 ns/op
+BenchmarkMatrixLogFib20-4   	10000000	       183 ns/op
+BenchmarkMatrixLogFib40-4   	10000000	       197 ns/op
+BenchmarkMatrixLogFib50-4   	10000000	       218 ns/op
+BenchmarkMatrixLogFib60-4   	10000000	       247 ns/op
+BenchmarkMatrixLogFib70-4   	 5000000	       240 ns/op
+BenchmarkMatrixLogFib80-4   	10000000	       222 ns/op
+BenchmarkMatrixLogFib90-4   	 5000000	       267 ns/op
+PASS
+ok  	github.com/crhntr/alg/fibonacci	75.372s
