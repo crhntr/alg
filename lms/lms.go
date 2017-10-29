@@ -2,6 +2,8 @@
 // the longest monotone sequence algorithm.
 package lms
 
+// Ints runs the longest monotone sequence (lms) algorithm
+// on a slice of ints. It returns the lms.
 func Ints(seq []int) []int {
 	l := make([][]int, len(seq)) // allocation here will effect bemchmark
 	l[0] = seq[:1]
