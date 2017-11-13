@@ -84,7 +84,10 @@ var (
 )
 
 func benchmarkShuffle(wuv []string, f func(w, u, v string) bool, b *testing.B) {
-	// b.Logf("v: %q, u: %q, y: %q\n", wuv[0], wuv[1], wuv[2])
+	// if len(wuv[0]) < 100 {
+	// 	b.Logf("v: %q, u: %q, y: %q\n", wuv[0], wuv[1], wuv[2])
+	// }
+	// b.ResetTimer()
 	for n := 0; n < b.N; n++ {
 		if !f(wuv[0], wuv[1], wuv[2]) {
 			b.Fail()
