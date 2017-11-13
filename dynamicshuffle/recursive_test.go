@@ -1,8 +1,6 @@
 package dynamicshuffle
 
 import (
-	"fmt"
-	"os"
 	"testing"
 )
 
@@ -59,37 +57,6 @@ func TestIsShuffleRecursive_aaabbbabcabc(t *testing.T) {
 	w, u, v := "abcabc", "aaa", "bbb"
 
 	if IsShuffleRecursive(w, u, v) {
-		t.Fail()
-	}
-}
-
-func TestIsShuffleRecursiveVerbose_5by5(t *testing.T) {
-	testIsShuffleRecursiveVerboseN(5, 5, alphabet, t)
-}
-
-func TestIsShuffleRecursiveVerbose_10by5(t *testing.T) {
-	testIsShuffleRecursiveVerboseN(10, 5, alphabet, t)
-}
-
-func TestIsShuffleRecursiveVerbose_5by10(t *testing.T) {
-	testIsShuffleRecursiveVerboseN(5, 10, alphabet, t)
-}
-
-func TestIsShuffleRecursiveVerbose_4by3(t *testing.T) {
-	testIsShuffleRecursiveVerboseN(7, 9, "01", t)
-}
-
-func testIsShuffleRecursiveVerboseN(vLen, uLen int, sigma string, t *testing.T) {
-	fileName := fmt.Sprintf("testout/TestIsShuffleRecursiveVerbose_%dby%d_out.txt", vLen, uLen)
-	os.Remove(fileName)
-	f, err := os.Create(fileName)
-	if err != nil {
-		t.Fatal(err)
-	}
-	defer f.Close()
-
-	wuv := generateShuffle(vLen, uLen, sigma)
-	if !IsShuffleRecursiveVerbose(wuv[0], wuv[1], wuv[2], f) {
 		t.Fail()
 	}
 }

@@ -1,5 +1,10 @@
 package dynamicshuffle
 
+import (
+	"fmt"
+	"time"
+)
+
 func IsShuffleIterative(w, u, v string) bool {
 	if len(w) != (len(u) + len(v)) {
 		return false
@@ -37,29 +42,32 @@ func IsShuffleIterative(w, u, v string) bool {
 		}
 	}
 
-	// displayTable(table, u, v)
+	if Verbose {
+		displayTable(table, w, u, v)
+	}
+
 	return table[len(u)][len(v)]
 }
 
-// func displayTable(table [][]bool, u, v string) {
-// 	fmt.Printf("   %s\n", v)
-// 	for i := range table {
-// 		if i == 0 {
-// 			fmt.Printf("  ")
-// 		} else {
-// 			fmt.Printf("%c ", u[i-1])
-// 		}
-//
-// 		for j := range table[i] {
-// 			if table[i][j] {
-// 				fmt.Printf("*")
-// 			} else {
-// 				fmt.Printf("-")
-// 			}
-// 		}
-//
-// 		fmt.Println()
-// 	}
-// 	fmt.Println()
-// 	time.Sleep(time.Millisecond * 10)
-// }
+func displayTable(table [][]bool, w, u, v string) {
+	fmt.Printf("w: %q\n\n   %s\n", w, v)
+	for i := range table {
+		if i == 0 {
+			fmt.Printf("  ")
+		} else {
+			fmt.Printf("%c ", u[i-1])
+		}
+
+		for j := range table[i] {
+			if table[i][j] {
+				fmt.Printf("*")
+			} else {
+				fmt.Printf("-")
+			}
+		}
+
+		fmt.Println()
+	}
+	fmt.Println()
+	time.Sleep(time.Millisecond * 10)
+}
