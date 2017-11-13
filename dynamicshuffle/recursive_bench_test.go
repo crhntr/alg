@@ -1,22 +1,8 @@
-package dynamicshuffle_test
+package dynamicshuffle
 
 import (
 	"testing"
-
-	. "github.com/crhntr/alg/dynamicshuffle"
 )
-
-func benchmarkShuffle(wuv []string, f func(w, u, v string) bool, b *testing.B) {
-	// if len(wuv[0]) < 100 {
-	// 	b.Logf("v: %q, u: %q, y: %q\n", wuv[0], wuv[1], wuv[2])
-	// }
-	// b.ResetTimer()
-	for n := 0; n < b.N; n++ {
-		if !f(wuv[0], wuv[1], wuv[2]) {
-			b.Fail()
-		}
-	}
-}
 
 func BenchmarkIsShuffleRecursive6(b *testing.B) {
 	benchmarkShuffle(generateShuffle(3, 3, alphabet), IsShuffleRecursive, b)

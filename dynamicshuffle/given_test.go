@@ -1,9 +1,7 @@
-package dynamicshuffle_test
+package dynamicshuffle
 
 import (
 	"testing"
-
-	. "github.com/crhntr/alg/dynamicshuffle"
 )
 
 func TestIsShuffleRecursive_000111(t *testing.T) {
