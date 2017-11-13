@@ -1,7 +1,9 @@
 package dynamicshuffle_test
 
 import (
+	"fmt"
 	"math/rand"
+	"os"
 	"testing"
 
 	. "github.com/crhntr/alg/dynamicshuffle"
@@ -135,24 +137,56 @@ func generateShuffle(uLen, vLen int, Σ string) []string {
 		v += Σ[index : index+1]
 	}
 
-	for ui, vi := 0, 0; ui+vi < (uLen + vLen); {
+	for ui, vi := 0, 0; (ui + vi) < (uLen + vLen); {
 		if rand.Intn(2) == 1 {
-			w += u[ui : ui+1]
-			ui++
+			if ui+1 <= len(u) {
+				w += u[ui : ui+1]
+				ui++
+			}
 		} else {
-			w += v[vi : vi+1]
-			vi++
+			if vi+1 <= len(v) {
+				w += v[vi : vi+1]
+				vi++
+			}
+
 		}
 
-		if ui == uLen {
+		if ui >= uLen {
 			w += v[vi:]
 			break
 		}
-		if vi == vLen {
+		if vi >= vLen {
 			w += u[ui:]
 			break
 		}
 	}
 
 	return []string{w, u, v}
+}
+
+func testIsShuffleRecursiveVerboseN(vLen, uLen int, t *testing.T) {
+	fileName := fmt.Sprintf("TestIsShuffleRecursiveVerbose_%dby%d_out.txt", vLen, uLen)
+	os.Remove(fileName)
+	f, err := os.Create(fileName)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer f.Close()
+
+	wuv := generateShuffle(vLen, uLen, alphabet)
+	if !IsShuffleRecursiveVerbose(wuv[0], wuv[1], wuv[2], f) {
+		t.Fail()
+	}
+}
+
+func TestIsShuffleRecursiveVerbose_5by5(t *testing.T) {
+	testIsShuffleRecursiveVerboseN(5, 5, t)
+}
+
+func TestIsShuffleRecursiveVerbose_10by5(t *testing.T) {
+	testIsShuffleRecursiveVerboseN(10, 5, t)
+}
+
+func TestIsShuffleRecursiveVerbose_5by10(t *testing.T) {
+	testIsShuffleRecursiveVerboseN(5, 10, t)
 }
