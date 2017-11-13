@@ -111,65 +111,11 @@ ok  	github.com/crhntr/alg/dynamicshuffle	0.071s
 
 ## Visual Output for Recursive Solution
 ```
-$ go test -v -run .*Iterative.*
-=== RUN   TestIsShuffleIterative_000111
-w: "010101"
-
-   111
-  *---
-0 **--
-0 -**-
-0 --**
-
---- PASS: TestIsShuffleIterative_000111 (0.01s)
-=== RUN   TestIsShuffleIterative_011011
-w: "001111"
-
-   011
-  **--
-0 ****
-1 -***
-1 -***
-
---- PASS: TestIsShuffleIterative_011011 (0.01s)
-=== RUN   TestIsShuffleIterative_01
---- PASS: TestIsShuffleIterative_01 (0.00s)
-=== RUN   TestIsShuffleIterative_10
---- PASS: TestIsShuffleIterative_10 (0.00s)
-=== RUN   TestIsShuffleIterative_100
---- PASS: TestIsShuffleIterative_100 (0.00s)
-=== RUN   TestIsShuffleIterative_aaaaccebbbbdde
-w: "aabbababcdcdee"
-
-   bbbbdde
-  *-------
-a *-------
-a ***-----
-a --**----
-a ---**---
-c ----**--
-c -----***
-e ------**
-
---- PASS: TestIsShuffleIterative_aaaaccebbbbdde (0.01s)
-=== RUN   TestIsShuffleIterative_ab
-w: "aa"
-
-   b
-  *-
-a *-
-
---- PASS: TestIsShuffleIterative_ab (0.01s)
-=== RUN   TestIsShuffleIterative_aaabbbabcabc
-w: "abcabc"
-
-   bbb
-  *---
-a **--
-a ----
-a ----
-
---- PASS: TestIsShuffleIterative_aaabbbabcabc (0.01s)
-PASS
-ok  	github.com/crhntr/alg/dynamicshuffle	0.071s
+w: "pSyqeDMXEf", u: "pSyqE", v: "eDMXf"
+w: "pSyqeDMXE", u: "pSyqE", v: "eDMX"
+w: "pSyqeDMX", u: "pSyq", v: "eDMX"
+w: "pSyqeDM", u: "pSyq", v: "eDM"
+w: "pSyqeD", u: "pSyq", v: "eD"
+w: "pSyqe", u: "pSyq", v: "e"
+w: "pSyq", u: "pSyq", v: ""
 ```
