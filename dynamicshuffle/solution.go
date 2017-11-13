@@ -1,14 +1,14 @@
 package dynamicshuffle
 
-func IsShuffleRecursive(w, x, y string) bool {
-	// fmt.Printf("w: %q, x: %q, y: %q\n", w, x, y)
-	if len(x) == 0 {
-		return y == w
+func IsShuffleRecursive(w, u, v string) bool {
+	// fmt.Printf("w: %q, u: %q, v: %q\n", w, u, v)
+	if len(u) == 0 {
+		return v == w
 	}
-	if len(y) == 0 {
-		return x == w
+	if len(v) == 0 {
+		return u == w
 	}
-	x1, y1, w1 := x[:len(x)-1], y[:len(y)-1], w[:len(w)-1]
-	return (w[len(w)-1] == y[len(y)-1] && IsShuffleRecursive(w1, x, y1)) ||
-		(w[len(w)-1] == x[len(x)-1] && IsShuffleRecursive(w1, x1, y))
+	u1, y1, w1 := u[:len(u)-1], v[:len(v)-1], w[:len(w)-1]
+	return (w[len(w)-1] == v[len(v)-1] && IsShuffleRecursive(w1, u, y1)) ||
+		(w[len(w)-1] == u[len(u)-1] && IsShuffleRecursive(w1, u1, v))
 }

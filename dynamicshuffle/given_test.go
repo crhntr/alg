@@ -8,73 +8,73 @@ import (
 )
 
 func TestIsShuffleRecursive_000111(t *testing.T) {
-	x, y, w := "000", "111", "010101"
+	w, u, v := "010101", "000", "111"
 
-	if !IsShuffleRecursive(w, x, y) {
+	if !IsShuffleRecursive(w, u, v) {
 		t.Fail()
 	}
 }
 
 func TestIsShuffleRecursive_0(t *testing.T) {
-	x, y, w := "", "0", "0"
+	w, u, v := "0", "", "0"
 
-	if !IsShuffleRecursive(w, x, y) {
+	if !IsShuffleRecursive(w, u, v) {
 		t.Fail()
 	}
 }
 
 func TestIsShuffleRecursive_1(t *testing.T) {
-	x, y, w := "1", "", "1"
+	w, u, v := "1", "1", ""
 
-	if !IsShuffleRecursive(w, x, y) {
+	if !IsShuffleRecursive(w, u, v) {
 		t.Fail()
 	}
 }
 
 func TestIsShuffleRecursiveLongRandom(t *testing.T) {
-	x, y, w := "000", "111", "010101"
+	w, u, v := "010101", "000", "111"
 
-	if !IsShuffleRecursive(w, x, y) {
+	if !IsShuffleRecursive(w, u, v) {
 		t.Fail()
 	}
 }
 
 func TestIsShuffleRecursive_011011(t *testing.T) {
-	x, y, w := "011", "011", "001111"
+	w, u, v := "001111", "011", "011"
 
-	if !IsShuffleRecursive(w, x, y) {
+	if !IsShuffleRecursive(w, u, v) {
 		t.Fail()
 	}
 }
 
 func TestIsShuffleRecursive_101101(t *testing.T) {
-	x, y, w := "101", "101", "110101"
+	w, u, v := "110101", "101", "101"
 
-	if !IsShuffleRecursive(w, x, y) {
+	if !IsShuffleRecursive(w, u, v) {
 		t.Fail()
 	}
 }
 
 func TestIsShuffleRecursive_aaaaccebbbbdde(t *testing.T) {
-	x, y, w := "aaaacce", "bbbbdde", "aabbababcdcdee"
+	w, u, v := "aabbababcdcdee", "aaaacce", "bbbbdde"
 
-	if !IsShuffleRecursive(w, x, y) {
+	if !IsShuffleRecursive(w, u, v) {
 		t.Fail()
 	}
 }
 
 func TestIsShuffleRecursive_aaaaccqbbbbdde(t *testing.T) {
-	x, y, w := "aaaaccq", "bbbbdde", "aabbababcdcdee"
+	w, u, v := "aabbababcdcdee", "aaaaccq", "bbbbdde"
 
-	if IsShuffleRecursive(w, x, y) {
+	if IsShuffleRecursive(w, u, v) {
 		t.Fail()
 	}
 }
 
 func TestIsShuffleRecursive_aaabbbabcabc(t *testing.T) {
-	x, y, w := "aaa", "bbb", "abcabc"
+	w, u, v := "abcabc", "aaa", "bbb"
 
-	if IsShuffleRecursive(w, x, y) {
+	if IsShuffleRecursive(w, u, v) {
 		t.Fail()
 	}
 }
@@ -83,10 +83,10 @@ var (
 	alphabet = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 )
 
-func benchmarkShuffle(wxy []string, f func(w, x, y string) bool, b *testing.B) {
-	// b.Logf("w: %q, x: %q, y: %q\n", wxy[0], wxy[1], wxy[2])
+func benchmarkShuffle(wuv []string, f func(w, u, v string) bool, b *testing.B) {
+	// b.Logf("v: %q, u: %q, y: %q\n", wuv[0], wuv[1], wuv[2])
 	for n := 0; n < b.N; n++ {
-		if !f(wxy[0], wxy[1], wxy[2]) {
+		if !f(wuv[0], wuv[1], wuv[2]) {
 			b.Fail()
 		}
 	}
@@ -111,36 +111,36 @@ func BenchmarkIsShuffleRecursive120000(b *testing.B) {
 	benchmarkShuffle(generateShuffle(60000, 60000, alphabet), IsShuffleRecursive, b)
 }
 
-func generateShuffle(yLen, xLen int, Σ string) []string {
-	x, y, w := "", "", ""
-	for i := 0; i < yLen; i++ {
+func generateShuffle(uLen, vLen int, Σ string) []string {
+	w, u, v := "", "", ""
+	for i := 0; i < uLen; i++ {
 		index := rand.Intn(len(Σ))
-		y += Σ[index : index+1]
+		u += Σ[index : index+1]
 	}
 
-	for i := 0; i < xLen; i++ {
+	for i := 0; i < vLen; i++ {
 		index := rand.Intn(len(Σ))
-		x += Σ[index : index+1]
+		v += Σ[index : index+1]
 	}
 
-	for xi, yi := 0, 0; xi+yi < (yLen + xLen); {
+	for ui, vi := 0, 0; ui+vi < (uLen + vLen); {
 		if rand.Intn(2) == 1 {
-			w += x[xi : xi+1]
-			xi++
+			u += u[ui : ui+1]
+			ui++
 		} else {
-			w += y[yi : yi+1]
-			yi++
+			v += v[vi : vi+1]
+			vi++
 		}
 
-		if xi == xLen {
-			w += y[yi:]
+		if ui == uLen {
+			w += v[vi:]
 			break
 		}
-		if yi == yLen {
-			w += x[xi:]
+		if vi == vLen {
+			w += u[ui:]
 			break
 		}
 	}
 
-	return []string{w, x, y}
+	return []string{w, u, v}
 }
