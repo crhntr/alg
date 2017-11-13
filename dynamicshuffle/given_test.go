@@ -39,6 +39,22 @@ func TestIsShuffleRecursive_101101(t *testing.T) {
 	}
 }
 
+func TestIsShuffleRecursive_aaaaccebbbbdde(t *testing.T) {
+	x, y, w := "aaaacce", "bbbbdde", "aabbababcdcdee"
+
+	if !IsShuffleRecursive(w, x, y) {
+		t.Fail()
+	}
+}
+
+func TestIsShuffleRecursive_aaaaccqbbbbdde(t *testing.T) {
+	x, y, w := "aaaaccq", "bbbbdde", "aabbababcdcdee"
+
+	if IsShuffleRecursive(w, x, y) {
+		t.Fail()
+	}
+}
+
 func TestIsShuffleRecursive_aaabbbabcabc(t *testing.T) {
 	x, y, w := "aaa", "bbb", "abcabc"
 
