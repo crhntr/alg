@@ -15,6 +15,22 @@ func TestIsShuffleRecursive_000111(t *testing.T) {
 	}
 }
 
+func TestIsShuffleRecursive_0(t *testing.T) {
+	x, y, w := "", "0", "0"
+
+	if !IsShuffleRecursive(w, x, y) {
+		t.Fail()
+	}
+}
+
+func TestIsShuffleRecursive_1(t *testing.T) {
+	x, y, w := "1", "", "1"
+
+	if !IsShuffleRecursive(w, x, y) {
+		t.Fail()
+	}
+}
+
 func TestIsShuffleRecursiveLongRandom(t *testing.T) {
 	x, y, w := "000", "111", "010101"
 
