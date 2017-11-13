@@ -111,11 +111,70 @@ ok  	github.com/crhntr/alg/dynamicshuffle	0.071s
 
 ## Visual Output for Recursive Solution
 ```
-w: "pSyqeDMXEf", u: "pSyqE", v: "eDMXf"
-w: "pSyqeDMXE", u: "pSyqE", v: "eDMX"
-w: "pSyqeDMX", u: "pSyq", v: "eDMX"
-w: "pSyqeDM", u: "pSyq", v: "eDM"
-w: "pSyqeD", u: "pSyq", v: "eD"
-w: "pSyqe", u: "pSyq", v: "e"
-w: "pSyq", u: "pSyq", v: ""
+$ go test -v -run .*Recursive.*
+=== RUN   TestIsShuffleRecursive_000111
+w: "010101", u: "000", v: "111"
+w: "01010", u: "000", v: "11"
+w: "0101", u: "00", v: "11"
+w: "010", u: "00", v: "1"
+w: "01", u: "0", v: "1"
+w: "0", u: "0", v: ""
+
+--- PASS: TestIsShuffleRecursive_000111 (0.00s)
+=== RUN   TestIsShuffleRecursive_011011
+w: "001111", u: "011", v: "011"
+w: "00111", u: "011", v: "01"
+w: "0011", u: "011", v: "0"
+w: "001", u: "01", v: "0"
+w: "00", u: "0", v: "0"
+w: "0", u: "0", v: ""
+
+--- PASS: TestIsShuffleRecursive_011011 (0.00s)
+=== RUN   TestIsShuffleRecursive_101101
+w: "110101", u: "101", v: "101"
+w: "11010", u: "101", v: "10"
+w: "1101", u: "101", v: "1"
+w: "110", u: "101", v: ""
+w: "110", u: "10", v: "1"
+w: "11", u: "1", v: "1"
+w: "1", u: "1", v: ""
+
+--- PASS: TestIsShuffleRecursive_101101 (0.00s)
+=== RUN   TestIsShuffleRecursive_0
+w: "0", u: "", v: "0"
+
+--- PASS: TestIsShuffleRecursive_0 (0.00s)
+=== RUN   TestIsShuffleRecursive_1
+w: "1", u: "1", v: ""
+
+--- PASS: TestIsShuffleRecursive_1 (0.00s)
+=== RUN   TestIsShuffleRecursive_BadCase
+--- PASS: TestIsShuffleRecursive_BadCase (0.00s)
+=== RUN   TestIsShuffleRecursive_aaaaccebbbbdde
+w: "aabbababcdcdee", u: "aaaacce", v: "bbbbdde"
+w: "aabbababcdcde", u: "aaaacce", v: "bbbbdd"
+w: "aabbababcdcd", u: "aaaacc", v: "bbbbdd"
+w: "aabbababcdc", u: "aaaacc", v: "bbbbd"
+w: "aabbababcd", u: "aaaac", v: "bbbbd"
+w: "aabbababc", u: "aaaac", v: "bbbb"
+w: "aabbabab", u: "aaaa", v: "bbbb"
+w: "aabbaba", u: "aaaa", v: "bbb"
+w: "aabbab", u: "aaa", v: "bbb"
+w: "aabba", u: "aaa", v: "bb"
+w: "aabb", u: "aa", v: "bb"
+w: "aab", u: "aa", v: "b"
+w: "aa", u: "aa", v: ""
+
+--- PASS: TestIsShuffleRecursive_aaaaccebbbbdde (0.00s)
+=== RUN   TestIsShuffleRecursive_aaaaccqbbbbdde
+w: "aabbababcdcdee", u: "aaaaccq", v: "bbbbdde"
+w: "aabbababcdcde", u: "aaaaccq", v: "bbbbdd"
+
+--- PASS: TestIsShuffleRecursive_aaaaccqbbbbdde (0.00s)
+=== RUN   TestIsShuffleRecursive_aaabbbabcabc
+w: "abcabc", u: "aaa", v: "bbb"
+
+--- PASS: TestIsShuffleRecursive_aaabbbabcabc (0.00s)
+PASS
+ok  	github.com/crhntr/alg/dynamicshuffle	0.013s
 ```

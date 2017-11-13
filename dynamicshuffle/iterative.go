@@ -42,7 +42,7 @@ func IsShuffleIterative(w, u, v string) bool {
 		}
 	}
 
-	if Verbose {
+	if Verbose && len(w) < 60 {
 		displayTable(table, w, u, v)
 	}
 

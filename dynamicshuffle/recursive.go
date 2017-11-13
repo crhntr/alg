@@ -5,8 +5,8 @@ import (
 )
 
 func IsShuffleRecursive(w, u, v string) bool {
-	if Verbose {
-		fmt.Printf("w: %q, u: %q, v: %q\n", w, u, v)
+	if Verbose && len(w) < 60 {
+		fmt.Printf("w: %q, u: %q, v: %q\n\n", w, u, v)
 	}
 
 	if len(u) == 0 {
