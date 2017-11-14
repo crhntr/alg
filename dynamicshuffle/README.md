@@ -1,5 +1,25 @@
 # Dynamic Shuffle Check
 
+For iterative (table based) solution see iterative.go.
+For a recursive solution see recursive.go.
+
+## Pseudocode
+```
+Given strings: w, u, v
+if |w| ≠ |u| + |v| then return false
+
+T ← boolean array of size |u| + 1 by |v| + 1
+T[0][0] ← true
+
+for i in range 1 to |u| do  	// note the loop goes from 1 to and including |u|
+	T[i][0] ← T[i-1][0] and (w[i-1] = u[i-1])
+for j in range 1 to |v| do
+	T[0][j] ← T[0][j-1] and (w[j-1] = v[j-1])
+for i in range 1 to |u| do
+	for j in range 1 to |v| do
+		T[i][j] ← (w[i+j-1] = u[i-1] and T[i-1][j]) or (w[i+j-1] = v[j-1] and T[i][j-1])
+return T[|u|][|v|]
+```
 
 ## Benchmark output
 ```
