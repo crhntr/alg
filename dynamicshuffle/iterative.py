@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 def isShuffleIterative(w, u, v): # returns a boolean
     if len(w) != (len(u) + len(v)):
         return False

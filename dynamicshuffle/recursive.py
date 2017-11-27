@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 def isShuffleRecursive(w, u, v): # returns a boolean
     if len(u) == 0:
         return v == w
