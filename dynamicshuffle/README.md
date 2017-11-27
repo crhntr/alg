@@ -3,9 +3,11 @@
 For iterative (table based) solution see iterative.go.
 For a recursive solution see recursive.go.
 
+Python implementations are also included see iterative.py and recursive.py.
+
 ## Pseudocode
 Note the Go code is easier to read; however, I wanted to write out the algorithm to separate the Go
-stuff from the algorithm. Such as initalizing the boolean array and conditionally printing the 
+stuff from the algorithm. Such as initalizing the boolean array and conditionally printing the
 verbose output.
 ```
 Given strings: w, u, v
