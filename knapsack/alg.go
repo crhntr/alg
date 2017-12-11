@@ -6,10 +6,7 @@ func Simple(capacity int, weights ...int) []int {
 		return []int{}
 	}
 
-	table := make([]bool, len(weights))
-	// for i := range table {
-	// 	table[i] = make([]bool, capacity+1)
-	// }
+	table := make([]bool, capacity+1)
 	table[0] = true
 
 	// for i := range weights {
@@ -26,9 +23,10 @@ func Simple(capacity int, weights ...int) []int {
 		}
 	}
 
-	results := []int{}
+	results, c := []int{}, 0
 	for _, wi := range weights {
-		if wi > len(table) && table[wi] {
+		if wi < len(table) && table[wi] && c+wi <= capacity {
+			c += wi
 			results = append(results, wi)
 		}
 	}
