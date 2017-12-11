@@ -17,6 +17,10 @@ func TestSolve4Vertex(t *testing.T) {
 
 	t.Log(graph)
 
+	if graph.IsConnected() {
+		t.Fatal("this graph should not be conected before Floyd-Warshall Alg.")
+	}
+
 	floydwarshall.Solve([][]float64(graph))
 
 	t.Log(graph)
