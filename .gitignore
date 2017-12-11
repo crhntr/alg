@@ -7,3 +7,4 @@
 *.bbl
 *.pyc
 workspace
+*.DS_Store
