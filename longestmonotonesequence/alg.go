@@ -1,0 +1,28 @@
+package lms
+
+func Len(seq []int) int {
+	lmsAtJ := make([]int, len(seq))
+	for i := range lmsAtJ {
+		lmsAtJ[i] = 1
+	}
+
+	for j := 1; j < len(seq); j++ {
+		max := 0
+
+		for i := 0; i < j; i++ {
+			if lmsAtJ[i] > max && seq[i] <= seq[j] {
+				max = lmsAtJ[i]
+			}
+		}
+
+		lmsAtJ[j] = max + 1
+	}
+
+	max := 1
+	for _, ln := range lmsAtJ {
+		if ln > max {
+			max = ln
+		}
+	}
+	return max
+}
