@@ -12,6 +12,6 @@ func TestSimple(t *testing.T) {
 }
 
 func TestGeneral(t *testing.T) {
-	res := knapsack.General(5, knapsack.Items{{2, 5}, {3, 3}, {1, 6}})
+	res := knapsack.General(5, knapsack.Values{{2, 5}, {3, 3}, {1, 6}})
 	t.Log(res)
 }
