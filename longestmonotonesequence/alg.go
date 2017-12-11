@@ -34,9 +34,9 @@ func Dif(seq []int, difference int) int {
 	if len(seq) < 1 {
 		return 0
 	}
-	lmsAtJ := make([]int, len(seq))
-	for i := range lmsAtJ {
-		lmsAtJ[i] = 1
+	lenAtJ := make([]int, len(seq))
+	for i := range lenAtJ {
+		lenAtJ[i] = 1
 	}
 
 	for j := 1; j < len(seq); j++ {
@@ -44,23 +44,23 @@ func Dif(seq []int, difference int) int {
 
 		for i := 0; i < j; i++ {
 
-			if lmsAtJ[i] > max {
+			if lenAtJ[i] > max {
 				dif := seq[i] - seq[j]
 				if dif < 0 {
 					dif *= -1
 				}
 
 				if dif <= difference {
-					max = lmsAtJ[i]
+					max = lenAtJ[i]
 				}
 			}
 		}
 
-		lmsAtJ[j] = max + 1
+		lenAtJ[j] = max + 1
 	}
 
 	max := 1
-	for _, ln := range lmsAtJ {
+	for _, ln := range lenAtJ {
 		if ln > max {
 			max = ln
 		}
