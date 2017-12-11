@@ -1,6 +1,6 @@
 package lms
 
-func Len(seq []int) int {
+func Ints(seq []int) int {
 	if len(seq) < 1 {
 		return 0
 	}
