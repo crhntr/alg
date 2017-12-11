@@ -33,7 +33,7 @@ func Simple(capacity int, weights ...int) []int {
 	return results
 }
 
-type Items [][2]int
+type Values [][2]int
 
 func General(capacity int, values [][2]int) [][2]int {
 	return values
