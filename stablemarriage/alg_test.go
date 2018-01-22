@@ -1,13 +1,14 @@
 package stablemarriage
 
 import (
-	"encoding/json"
-	"os"
 	"testing"
 )
 
 func TestAlg00(t *testing.T) {
-	people := loadJSONPeople(t, "testdata/set00.json")
+	people, err := LoadPeopleFromFile("testdata/set00.json")
+	if err != nil {
+		t.Fatal(err)
+	}
 	males, females := SortPeopleByGender(people)
 	Alg(males, females)
 
@@ -20,7 +21,10 @@ func TestAlg00(t *testing.T) {
 }
 
 func TestAlg01(t *testing.T) {
-	people := loadJSONPeople(t, "testdata/set01.json")
+	people, err := LoadPeopleFromFile("testdata/set01.json")
+	if err != nil {
+		t.Fatal(err)
+	}
 	males, females := SortPeopleByGender(people)
 	Alg(males, females)
 
@@ -33,7 +37,10 @@ func TestAlg01(t *testing.T) {
 }
 
 func TestAlg02(t *testing.T) {
-	people := loadJSONPeople(t, "testdata/set02.json")
+	people, err := LoadPeopleFromFile("testdata/set02.json")
+	if err != nil {
+		t.Fatal(err)
+	}
 	males, females := SortPeopleByGender(people)
 
 	for _, person := range append(males, females...) {
@@ -50,17 +57,17 @@ func TestAlg02(t *testing.T) {
 	}
 }
 
-func loadJSONPeople(t *testing.T, filename string) (people []Person) {
-	f, err := os.Open(filename)
-	if err != nil {
-		t.Fatal(err)
+func TestLoadPeopleFromFile(t *testing.T) {
+	if _, err := LoadPeopleFromFile("testdata/badData.json"); err == nil {
+		t.Error("testdata/badData.json should err")
 	}
-	file := struct {
-		People []Person `json:"people"`
-	}{}
-	err = json.NewDecoder(f).Decode(&file)
-	if err != nil {
-		t.Fatal(err)
+	if _, err := LoadPeopleFromFile("testdata/badData00.json"); err == nil {
+		t.Error("testdata/badData00.json should err")
 	}
-	return file.People
+	if _, err := LoadPeopleFromFile("testdata/badData01.json"); err == nil {
+		t.Error("testdata/badData01.json should err")
+	}
+	if _, err := LoadPeopleFromFile("testdata/badData02.json"); err == nil {
+		t.Error("testdata/badData02.json should err")
+	}
 }

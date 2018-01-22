@@ -1,6 +1,9 @@
 package stablemarriage
 
 import (
+	"encoding/json"
+	"fmt"
+	"os"
 	"strings"
 )
 
@@ -115,4 +118,38 @@ func SortPeopleByGender(people []Person) (males, females []Person) {
 		}
 	}
 	return
+}
+
+func LoadPeopleFromFile(filename string) ([]Person, error) {
+	file := struct {
+		People []Person `json:"people"`
+	}{}
+
+	f, err := os.Open(filename)
+	if err != nil {
+		return file.People, err
+	}
+
+	err = json.NewDecoder(f).Decode(&file)
+	if err != nil {
+		return file.People, err
+	}
+
+	for personIndex, person := range file.People {
+	nextPreference:
+		for preferenceIndex, preference := range person.Preferences {
+			if person.Name == preference {
+				return file.People, fmt.Errorf("person %s cannot prefer themeselves (preferences: %d)", person.Name, preferenceIndex)
+			}
+
+			for i, p := range file.People {
+				if i != personIndex && p.Name == preference {
+					continue nextPreference
+				}
+			}
+			return file.People, fmt.Errorf("%s has an unknown person named %s in their preference list", person.Name, preference)
+		}
+	}
+
+	return file.People, nil
 }
