@@ -79,11 +79,18 @@ func (person Person) CompareToExistingMatch(otherPerson *Person) bool {
 }
 
 func (person *Person) GetPreferedMatch(people []Person) int {
-	i := findIndex(people, person.Preferences[0])
+	preferenceIndex := 0
+
+	for preferenceIndex = range people {
+		if people[preferenceIndex].Name == person.Preferences[0] {
+			break
+		}
+	}
+
 	if len(person.Preferences) > 1 {
 		person.Preferences = person.Preferences[1:]
 	}
-	return i
+	return preferenceIndex
 }
 
 func SinglesExist(people []Person) bool {
@@ -97,15 +104,6 @@ func SinglesExist(people []Person) bool {
 
 func match(person1, person2 *Person) {
 	person1.Match, person2.Match = person2, person1
-}
-
-func findIndex(people []Person, name string) int {
-	for i := range people {
-		if people[i].Name == name {
-			return i
-		}
-	}
-	panic(name + " not found")
 }
 
 func SortPeopleByGender(people []Person) (males, females []Person) {
