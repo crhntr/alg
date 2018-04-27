@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Operational Transformation</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <div>Cache: "{{textCache}}"</div>
+      <div class="message">{{message}}</div>
+      <textarea v-model="text"></textarea>
+    </div>
+  </body>
+  <script>
+    var app = new Vue({
+      el: '#app',
+      created () {
+        if (!window["WebSocket"]) {
+          this.message = 'Your browser does not support WebSockets'
+          return
+        }
+
+        this.conn = new WebSocket("ws://" + document.location.host + "/ws");
+        this.conn.onclose = evt => { this.message = 'socket closed' }
+        this.conn.onmessage = (evt) => {
+          console.log(evt)
+          if (evt.data !== this.textCache) {
+            this.textCache = evt.data
+          }
+        }
+      },
+      beforeDestroy () { this.conn.close(1001, 'viewer navigating away') },
+      data () {
+        return {
+          textCache: '',
+          message: '',
+          conn: null
+        }
+      },
+      computed: {
+        text: {
+          get: function () {
+            return this.textCache
+          },
+          set: function (newText) {
+            this.textCache = newText
+            this.conn.send(newText)
+          }
+        }
+      }
+    })
+  </script>
+</html>
