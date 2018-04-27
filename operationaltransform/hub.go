@@ -7,6 +7,8 @@ package main
 // Hub maintains the set of active clients and broadcasts messages to the
 // clients.
 type Hub struct {
+	state State
+
 	// Registered clients.
 	clients map[*Client]bool
 

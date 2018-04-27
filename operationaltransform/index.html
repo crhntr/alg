@@ -16,6 +16,24 @@
 
   const KeyBackspace = 8
 
+  if (!String.prototype.splice) {
+      /**
+       * {JSDoc}
+       *
+       * The splice() method changes the content of a string by removing a range of
+       * characters and/or adding new characters.
+       *
+       * @this {String}
+       * @param {number} start Index at which to start changing the string.
+       * @param {number} delCount An integer indicating the number of old chars to remove.
+       * @param {string} newSubStr The String that is spliced in.
+       * @return {string} A new string with the spliced substring.
+       */
+      String.prototype.splice = function(start, delCount, newSubStr) {
+          return this.slice(0, start) + newSubStr + this.slice(start + Math.abs(delCount));
+      };
+  }
+
   function getCookie(cname) {
       var name = cname + "="
       var decodedCookie = decodeURIComponent(document.cookie)
@@ -51,6 +69,20 @@
   }
 
 
+  function createNode (sid, len, index, previousHash) {
+
+  }
+
+  function apply (str, op) {
+    console.log({str, op})
+    return str.splice(op.index, op.len || 0, String.fromCharCode(op.val))
+  }
+
+  function commit (map, op) {
+
+  }
+
+
     var app = new Vue({
       el: '#app',
       created () {
@@ -69,17 +101,33 @@
 
         this.conn = new WebSocket("ws://" + document.location.host + "/ws")
         this.conn.onclose = evt => { this.message = 'socket closed' }
+
         this.conn.onmessage = (evt) => {
           const op = JSON.parse(evt.data)
-          if (op.sid === this.sid) { return }
+          this.nodes[op.hash] = op
 
+          function traverseUpdateChain (node, op) {
+            console.log(node, op)
+            if (!node.hash) {
+              return String.fromCharCode(op.val)
+            }
+            if (node.hash === op.previousHash && node.hash !== op.hash) {
+              return apply(op.text, node)
+            }
+            return traverseUpdateChain(this.nodes[node.previousHash], op)
+          }
 
-          console.log(op)
+          var newText = traverseUpdateChain(this.head, op)
+          if (newText !== this.head.text) {
+            this.head = op
+            this.text = newText
+          }
         }
       },
       beforeDestroy () { this.conn.close(1001, 'viewer navigating away') },
       data () {
         return {
+          nodes: {},
           disable: false,
           sid: '',
           text: '',
@@ -88,6 +136,7 @@
           selectionStart: 0,
           selectionEnd: 0,
           n: 0,
+          head: {hash: ''},
           previousLen: 0
         }
       },
@@ -97,14 +146,14 @@
           var indexStart = this.$refs.textarea.selectionStart
           var indexEnd = this.$refs.textarea.selectionEnd
           var char = e.keyCode ? e.keyCode : e.which
-          var len = indexEnd - indexStart
 
           console.log({indexStart, indexEnd})
 
           var op = {
             sid: this.sid,
-            len,
-            index: indexStart
+            len: this.previousLen,
+            index: indexStart,
+            previousHash: this.previousHash
           }
 
           console.log(e)
@@ -115,10 +164,8 @@
               // fallthrough
             case "Backspace":
               op.type = e.key
-              op.len = this.previousLen
               break;
             default:
-              this.previousLen = len
               if (e.key.length !== 1) {
                 return // ignore
               }
@@ -130,12 +177,18 @@
 
           this.n++
           crypto.subtle.digest("SHA-256", text).then(hash => {
+            var hash = hex(hash)
+            op.hash = hash
+            this.previousHash = hash
+
             op.n = this.n
-            op.hash = hex(hash)
+            this.nodes[op.hash] = op
             this.conn.send(JSON.stringify(op))
           }, hashErr => {
             console.log(hashErr)
           })
+
+          this.previousLen = indexEnd - indexStart
         }
       }
     })
