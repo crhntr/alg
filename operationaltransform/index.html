@@ -9,10 +9,12 @@
   <body>
     <div id="app">
       <div class="message">{{message}}</div>
-      <textarea ref="textarea" @keyup="input" v-model="text"></textarea>
+      <textarea ref="textarea" @keyup="input" v-model="text" :disabled="disable"></textarea>
     </div>
   </body>
   <script>
+
+  const KeyBackspace = 8
 
   function getCookie(cname) {
       var name = cname + "="
@@ -52,46 +54,85 @@
     var app = new Vue({
       el: '#app',
       created () {
+        this.sid = getCookie('sid') || Math.rand()
+
         if (!window["WebSocket"]) {
           this.message = 'Your browser does not support WebSockets'
+          this.disable = true
+          return
+        }
+        if (!window['SubtleCrypto']) {
+          this.message = 'Your browser does not support SubtleCrypto'
+          this.disable = true
           return
         }
 
         this.conn = new WebSocket("ws://" + document.location.host + "/ws")
         this.conn.onclose = evt => { this.message = 'socket closed' }
         this.conn.onmessage = (evt) => {
-          console.log(JSON.parse(evt.data))
+          const op = JSON.parse(evt.data)
+          if (op.sid === this.sid) { return }
+
+
+          console.log(op)
         }
       },
       beforeDestroy () { this.conn.close(1001, 'viewer navigating away') },
       data () {
         return {
+          disable: false,
+          sid: '',
           text: '',
           message: '',
           conn: null,
           selectionStart: 0,
           selectionEnd: 0,
-          n: 0
+          n: 0,
+          previousLen: 0
         }
       },
       methods: {
         input: function (e) {
-          this.n++
 
-          const sid = getCookie('sid')
+          var indexStart = this.$refs.textarea.selectionStart
+          var indexEnd = this.$refs.textarea.selectionEnd
+          var char = e.keyCode ? e.keyCode : e.which
+          var len = indexEnd - indexStart
 
-          if (!window['SubtleCrypto']) {
-            var index = this.$refs.textarea.selectionStart
-            var char = e.keyCode ? e.keyCode : e.which
-            this.conn.send(JSON.stringify({char, index, hash}))
-            return
+          console.log({indexStart, indexEnd})
+
+          var op = {
+            sid: this.sid,
+            len,
+            index: indexStart
           }
+
+          console.log(e)
+
+          switch (e.key) {
+            case "Enter":
+              op.val = char
+              // fallthrough
+            case "Backspace":
+              op.type = e.key
+              op.len = this.previousLen
+              break;
+            default:
+              this.previousLen = len
+              if (e.key.length !== 1) {
+                return // ignore
+              }
+              op.type = "Input"
+              op.val = char
+          }
+
           const text = new TextEncoder("utf-8").encode(this.text)
+
+          this.n++
           crypto.subtle.digest("SHA-256", text).then(hash => {
-            var index = this.$refs.textarea.selectionStart
-            var char = e.keyCode ? e.keyCode : e.which
-            var hash = hex(hash)
-            this.conn.send(JSON.stringify({char, index, hash, n: this.n, sid}))
+            op.n = this.n
+            op.hash = hex(hash)
+            this.conn.send(JSON.stringify(op))
           }, hashErr => {
             console.log(hashErr)
           })
