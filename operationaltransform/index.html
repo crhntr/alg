@@ -27,7 +27,8 @@
         this.conn.onmessage = (evt) => {
           console.log(evt)
           if (evt.data !== this.textCache) {
-            this.textCache = evt.data
+            const data = JSON.parse(evt.data)
+            this.textCache = data.newText
           }
         }
       },
@@ -41,12 +42,10 @@
       },
       computed: {
         text: {
-          get: function () {
-            return this.textCache
-          },
+          get: function () { return this.textCache },
           set: function (newText) {
             this.textCache = newText
-            this.conn.send(newText)
+            this.conn.send(JSON.stringify({newText: newText}))
           }
         }
       }
