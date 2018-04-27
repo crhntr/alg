@@ -3,6 +3,15 @@ package dynamicshuffle
 import "testing"
 
 // TestIsShuffleIterative_000111 given
+func TestIsShuffleIterative_000001(t *testing.T) {
+	w, u, v := "000100", "000", "001"
+
+	if !IsShuffleIterative(w, u, v) {
+		t.Fail()
+	}
+}
+
+// TestIsShuffleIterative_000111 given
 func TestIsShuffleIterative_000111(t *testing.T) {
 	w, u, v := "010101", "000", "111"
 
