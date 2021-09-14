@@ -1,11 +1,33 @@
 package stablemarriage
 
 import (
+	"bytes"
+	_ "embed"
 	"testing"
 )
 
+var (
+	//go:embed testdata/people00.json
+	people00JSON []byte
+
+	//go:embed testdata/people01.json
+	people01JSON []byte
+
+	//go:embed testdata/people02.json
+	people02JSON []byte
+
+	//go:embed testdata/badData00.json
+	badData00JSON []byte
+
+	//go:embed testdata/badData01.json
+	badData01JSON []byte
+
+	//go:embed testdata/badData02.json
+	badData02JSON []byte
+)
+
 func TestAlg00(t *testing.T) {
-	people, err := LoadPeopleFromFile("testdata/set00.json")
+	people, err := LoadPeople(bytes.NewReader(people00JSON))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -21,7 +43,7 @@ func TestAlg00(t *testing.T) {
 }
 
 func TestAlg01(t *testing.T) {
-	people, err := LoadPeopleFromFile("testdata/set01.json")
+	people, err := LoadPeople(bytes.NewReader(people01JSON))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -37,7 +59,7 @@ func TestAlg01(t *testing.T) {
 }
 
 func TestAlg02(t *testing.T) {
-	people, err := LoadPeopleFromFile("testdata/set02.json")
+	people, err := LoadPeople(bytes.NewBuffer(people02JSON))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -58,16 +80,13 @@ func TestAlg02(t *testing.T) {
 }
 
 func TestLoadPeopleFromFile(t *testing.T) {
-	if _, err := LoadPeopleFromFile("testdata/badData.json"); err == nil {
-		t.Error("testdata/badData.json should err")
-	}
-	if _, err := LoadPeopleFromFile("testdata/badData00.json"); err == nil {
+	if _, err := LoadPeople(bytes.NewBuffer(badData00JSON)); err == nil {
 		t.Error("testdata/badData00.json should err")
 	}
-	if _, err := LoadPeopleFromFile("testdata/badData01.json"); err == nil {
+	if _, err := LoadPeople(bytes.NewBuffer(badData01JSON)); err == nil {
 		t.Error("testdata/badData01.json should err")
 	}
-	if _, err := LoadPeopleFromFile("testdata/badData02.json"); err == nil {
+	if _, err := LoadPeople(bytes.NewBuffer(badData02JSON)); err == nil {
 		t.Error("testdata/badData02.json should err")
 	}
 }

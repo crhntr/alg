@@ -1,7 +1,7 @@
-package palendromes
+package palindromes
 
 // Alg returns whether a given string word
-// is a palendrome.
+// is a palindromes.
 func Alg(word string) bool {
 	n := len(word) - 1
 	for i := 0; i <= len(word)/2; i++ {

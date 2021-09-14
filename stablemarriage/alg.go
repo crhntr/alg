@@ -3,7 +3,7 @@ package stablemarriage
 import (
 	"encoding/json"
 	"fmt"
-	"os"
+	"io"
 	"strings"
 )
 
@@ -120,17 +120,12 @@ func SortPeopleByGender(people []Person) (males, females []Person) {
 	return
 }
 
-func LoadPeopleFromFile(filename string) ([]Person, error) {
+func LoadPeople(r io.Reader) ([]Person, error) {
 	file := struct {
 		People []Person `json:"people"`
 	}{}
 
-	f, err := os.Open(filename)
-	if err != nil {
-		return file.People, err
-	}
-
-	err = json.NewDecoder(f).Decode(&file)
+	err := json.NewDecoder(r).Decode(&file)
 	if err != nil {
 		return file.People, err
 	}
