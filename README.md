@@ -7,7 +7,3 @@ Some of this code is based on python code found at https://github.com/michaelsol
 
 ## Benchmarks
 Some of the algorithms have test files some of those also have benchmark tests written. To run the benchmark tool for the code `cd` into the appropriate directory and run `go test -bench=.`.
-
-## Docker
-A Dockerfile is included for all algorithms so you don't need to install Go (although to run benchmarks you should use the go tool).
-Simply `cd` into the appropriate directory and build/run the generated image.
