@@ -11,7 +11,7 @@ func TestIsPalindrome(t *testing.T) {
 	}{
 		{Value: "racecar", Expect: true},
 		{Value: "asdffdsa", Expect: true},
-		{Value: "qwertyterwq", Expect: true},
+		{Value: "qwertyterwq", Expect: false},
 	}
 	for _, test := range tests {
 		t.Run(test.Value, func(t *testing.T) {
@@ -20,5 +20,4 @@ func TestIsPalindrome(t *testing.T) {
 			}
 		})
 	}
-
 }
