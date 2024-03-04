@@ -9,6 +9,9 @@ func TestIsPalindrome(t *testing.T) {
 		Value  string
 		Expect bool
 	}{
+		{Value: "x", Expect: true},
+		{Value: "xy", Expect: false},
+		{Value: "", Expect: true},
 		{Value: "racecar", Expect: true},
 		{Value: "asdffdsa", Expect: true},
 		{Value: "qwertyterwq", Expect: false},
